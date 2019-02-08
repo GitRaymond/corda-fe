@@ -98,8 +98,9 @@
             getAllParties() {
                 this.$http.get(this.domain + "peers").then(result => {
                     let list = [];
-                    result.data.peers.map(function (value) {
-                        list.push({option: value, text: this.convertName(value)});
+                    var _this = this
+                     result.data.peers.map(function (value) {
+                        list.push({option: value, text: _this.convertName(value)});
                     });
                     this.peers = list;
                 }, error => {
