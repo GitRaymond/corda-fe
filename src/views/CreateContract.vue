@@ -7,7 +7,7 @@
                 <b-form @submit.prevent="sendData">
 
 
-                    <b-form-select id="counterParty" v-model="selected" :options="peers" class="mb-3">
+                    <b-form-select id="counterParty" v-model="selected" :options="peers" @input="getSelectedItem()" class="mb-3">
                         <template slot="first">
                             <!-- this slot appears above the options from 'options' prop -->
                             <option :value="null" disabled>-- Please select an option --</option>
@@ -98,14 +98,17 @@
             getAllParties() {
                 this.$http.get(this.domain + "peers").then(result => {
                     let list = [];
-                    var _this = this
+                    var _this = this;
                      result.data.peers.map(function (value) {
-                        list.push({option: value, text: _this.convertName(value)});
+                        list.push({value: value, text: _this.convertName(value)});
                     });
                     this.peers = list;
                 }, error => {
                     console.error(error);
                 });
+            },
+            getSelectedItem: function() {
+                console.log(this.selected);
             }
         },
         mounted() {
