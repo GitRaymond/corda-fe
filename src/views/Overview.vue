@@ -5,7 +5,7 @@
             <b-list-group-item href="#" active class="flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Smart contracts</h5>
-                    <small>Total: {{contracts.length}}</small>
+                    Total: {{contracts.length}}
                 </div>
             </b-list-group-item>
             <b-list-group-item href="#" class="flex-column align-items-start" v-for="contract in contracts.slice().reverse()">
