@@ -67,12 +67,36 @@
                 response: ""
             }
         },
+        methods: {
+            convertName(value) {
+                let newVal = '';
+
+                if(value === 'O=Notary Service, L=Zurich, C=CH') {
+                    newVal = 'Notary, Amsterdam';
+                } else if(value === 'O=PartyC, L=Paris, C=FR') {
+                    newVal = 'ABN AMRO BANK';
+                } else if(value === 'O=PartyB, L=New York, C=US') {
+                    newVal = 'ING BANK';
+                } else {
+                    newVal = value;
+                }
+                return newVal;
+            },
+
+            sendData() {
+                this.$http.post("https://httpbin.org/post", this.input, {headers: {"content-type": "application/json"}}).then(result => {
+                    this.response = result.data.json.counterparty + result.data.json.amount;
+                }, error => {
+                    console.error(error);
+                });
+            }
+        },
         mounted() {
             this.domain = 'http://172.20.10.13:10009/api/example/';
             this.peers = [];
             //Get profile name
             this.$http.get(this.domain + "me").then(result => {
-                this.myprofile = result.data.me;
+                this.myprofile = this.convertName(result.data.me);
             }, error => {
                 console.error(error);
             });
@@ -82,20 +106,7 @@
 
                 let list=[];
                 result.data.peers.map(function(value) {
-
-                    let newVal = '';
-                    if(value === 'O=Notary Service, L=Zurich, C=CH') {
-                        newVal = 'Notary, Amsterdam';
-                    } else if(value === 'O=PartyC, L=Paris, C=FR') {
-                        newVal = 'ABN AMRO BANK';
-                    } else if(value === 'O=PartyB, L=New York, C=US') {
-                        newVal = 'ING BANK';
-                    } else {
-                        newVal = val;
-                    }
-
-
-                    list.push({option: value, text: newVal});
+                    list.push({option: value, text: this.convertName(value)});
                 });
 
                 this.peers = list;
@@ -103,16 +114,8 @@
             }, error => {
                 console.error(error);
             });
-        },
-        methods: {
-            sendData() {
-                this.$http.post("https://httpbin.org/post", this.input, {headers: {"content-type": "application/json"}}).then(result => {
-                    this.response = result.data.json.counterparty + result.data.json.amount;
-                }, error => {
-                    console.error(error);
-                });
-            }
         }
+
     }
 </script>
 
