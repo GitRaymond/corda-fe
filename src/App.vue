@@ -1,6 +1,6 @@
 <template>
-    <div id="app" :style="'background-color: '+ getBodyBgColor() + ';'">
-        <c-header :style="'height: 15vh; background-color: ' + getHeaderBgColor() +';'" :profile="myprofile"></c-header>
+    <div id="app" :style="'background-color: '+ $_colorMixin_getBodyBgColor() + ';'">
+        <c-header :style="'height: 15vh; background-color: ' + $_colorMixin_getHeaderBgColor() +';'" :profile="myprofile"></c-header>
         <div class="container " style="height: 85vh;">
             <transition name="slide" mode="out-in">
                 <router-view/>
@@ -12,6 +12,7 @@
 <script>
     import Header from './components/Header';
     import apiMixin from './mixins/apiMixin'
+    import colorMixin from './mixins/colorMixin'
 
     export default {
         name: 'app',
@@ -20,28 +21,9 @@
         },
         mixins: [
             apiMixin,
+            colorMixin,
         ],
 
-        methods: {
-            getBodyBgColor() {
-                if (this.myprofile === 'RABO BANK') {
-                    return 'rgba(253, 100, 1, 0.02)';
-                } else if (this.myprofile === 'ABN AMRO BANK') {
-                    return 'rgb(0, 146, 134, 0.02)';
-                } else if (this.myprofile === 'ING BANK') {
-                    return 'rgb(255, 98, 1, 0.02)';
-                }
-            },
-            getHeaderBgColor() {
-                if (this.myprofile === 'RABO BANK') {
-                    return 'rgba(253, 100, 1)';
-                } else if (this.myprofile === 'ABN AMRO BANK') {
-                    return 'rgb(0, 146, 134)';
-                } else if (this.myprofile === 'ING BANK') {
-                    return 'rgb(255, 98, 1)';
-                }
-            }
-        },
         created() {
             this.$_apiMixin_getMyProfile();
         }

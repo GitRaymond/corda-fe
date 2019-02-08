@@ -1,14 +1,17 @@
 <template>
-    <div class="w-50">
-        <br/>
-        <b-list-group>
-            <b-list-group-item href="#" active class="flex-column align-items-start">
+    <div class="w-50 l-group m-5" :style="'background-color: '+ $_colorMixin_getHeaderBgColor() + ';'">
+
+        <b-list-group class="l-group" flush :style="'background-color: '+ $_colorMixin_getHeaderBgColor() + ';'">
+            <b-list-group-item class="flex-column align-items-start bg-light">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Smart contracts</h5>
-                    Total: {{contracts.length}}
+                    <span>Total: <b-badge variant="primary" pill>{{contracts.length}}</b-badge></span>
+
                 </div>
             </b-list-group-item>
-            <b-list-group-item href="#" class="flex-column align-items-start" v-for="contract in contracts.slice().reverse()">
+
+
+            <b-list-group-item class="flex-column align-items-start" v-for="contract in contracts.slice().reverse()">
 
                 <div class="d-flex w-100 justify-content-between">
                     <h5>{{contract.contractname}}</h5>
@@ -24,21 +27,25 @@
                 </div>
 
                 <div class="d-flex w-100 justify-content-between">
-                    <h6 class="mb-1">Smart contract of {{contract.type}} for {{contract.percentage}}% with {{contract.duration}} months</h6>
+                    <h6 class="mb-1">Smart contract of {{contract.type}} for {{contract.percentage}}% with
+                        {{contract.duration}} months</h6>
                 </div>
 
             </b-list-group-item>
         </b-list-group>
+
     </div>
 </template>
 
 <script>
     import apiMixin from '../mixins/apiMixin';
+    import colorMixin from '../mixins/colorMixin';
 
     export default {
         name: 'Overview',
         mixins: [
             apiMixin,
+            colorMixin,
         ],
         data() {
             return {
@@ -75,11 +82,14 @@
         },
         mounted() {
             this.getListOfContracts();
+            this.$_apiMixin_getMyProfile();
         }
 
     }
 </script>
 
 <style scoped>
-
+    .l-group {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
 </style>
