@@ -81,8 +81,21 @@
             this.$http.get(this.domain + "peers").then(result => {
 
                 let list=[];
-                result.data.peers.map(function(value, key) {
-                    list.push({option: value, text: value});
+                result.data.peers.map(function(value) {
+
+                    let newVal = '';
+                    if(value === 'O=Notary Service, L=Zurich, C=CH') {
+                        newVal = 'Notary, Amsterdam';
+                    } else if(value === 'O=PartyC, L=Paris, C=FR') {
+                        newVal = 'ABN AMRO BANK';
+                    } else if(value === 'O=PartyB, L=New York, C=US') {
+                        newVal = 'ING BANK';
+                    } else {
+                        newVal = val;
+                    }
+
+
+                    list.push({option: value, text: newVal});
                 });
 
                 this.peers = list;
