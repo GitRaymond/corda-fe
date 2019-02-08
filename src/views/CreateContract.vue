@@ -30,11 +30,24 @@
                         </b-form-input>
                     </b-form-group>
 
-                    <b-button type="submit" variant="primary">Send</b-button>
-                    <!--<b-button type="reset" variant="danger">Reset</b-button>-->
+                    <b-button type="submit" variant="primary">Send</b-button><br/><br/>
+                    <b-alert :show="dismissCountDown"
+                             dismissible
+                             variant="success"
+                             @dismissed="dismissCountDown=0"
+                             @dismiss-count-down="countDownChanged">
+                        <h4 class="alert-heading">Well done!</h4>
+                        <p>
+                            Ohh yeah, you successfully placed the contract
+                        </p>
+                        <hr>
+                        <p class="mb-0">
+                            See you back soon
+                        </p>
+                    </b-alert>
+
+
                 </b-form>
-
-
             </div>
         </b-card>
         <div class="mt-5">
@@ -50,6 +63,8 @@
         name: 'CreateContract',
         data() {
             return {
+                dismissSecs: 5,
+                dismissCountDown: 0,
                 myprofile: "",
                 selected: null,
                 peers: [],
@@ -60,6 +75,12 @@
             }
         },
         methods: {
+            countDownChanged (dismissCountDown) {
+                this.dismissCountDown = dismissCountDown
+            },
+            showAlert () {
+                this.dismissCountDown = this.dismissSecs
+            },
             convertName(value) {
                 let newVal = '';
                 if (value.includes('Notary')) {
@@ -81,12 +102,9 @@
                     iouValue: this.input.amount
                 };
 
-                // http://172.20.10.13:10009/api/example/
-                // create-iou?partyName=O=Notary%20Service,%20L=Zurich,%20C=CH&iouValue=92
-
                 this.$http.put(this.domain + "create-iou?partyName="+this.selected+"&iouValue="+this.input.amount, postData, {headers: {"content-type": "application/json"}})
                     .then((result) => {
-                        console.log( 'save succeedd');
+                        this.showAlert();
                     })
                     .catch((error) => {
                     console.error(error);
