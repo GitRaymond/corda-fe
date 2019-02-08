@@ -13,7 +13,7 @@ export default {
         $_apiMixin_convertName(value) {
             let newVal = '';
             if (value.includes('Notary')) {
-                newVal = 'Notary, Amsterdam';
+                newVal = 'Notary';
             } else if (value.includes('PartyC')) {
                 newVal = 'ABN AMRO BANK';
             } else if (value.includes('PartyB')) {

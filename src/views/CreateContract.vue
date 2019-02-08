@@ -69,12 +69,10 @@
                 dismissCountDown: 0,
                 myprofile: "",
                 selected: null,
-                peers: [],
                 input: {
                     amount: ""
                 },
                 response: "",
-                domain: 'http://172.20.10.13:10009/api/example/',
                 peers: [],
             }
         },

@@ -1,65 +1,65 @@
 <template>
+    <div class="w-50">
+        <br/>
+        <b-list-group>
+            <b-list-group-item href="#" class="flex-column align-items-start" v-for="contract in contracts.slice().reverse()">
 
-    <div class="stepCards mt-4">
-        <div :class="{ 'align-items-center': toggleCollapse }" class="row ">
-            <div class="col-md-1 ml-3">
-                <slot name="logo"></slot>
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"><strong>Lender:</strong> {{contract.lender}}</h5>
+                    <small class="text-muted">{{contract.value}}</small>
+                </div>
 
-            </div>
-            <div class="col-md-3">
-                <ign-custom-h5 class="stepsText ">
-                    <strong>
-                        <slot name="title"></slot>
-                    </strong>
-                </ign-custom-h5>
-                <transition name="fade">
-                    <slot v-if="!toggleCollapse" name="pictureWhenCollapsed"></slot>
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"><strong>Borrower:</strong> {{contract.borrower}}</h5>
+                </div>
 
-                </transition>
-            </div>
-            <div class="col-md-7">
-                <ign-custom-h5 class="stepsText">
-                    <slot name="collapsedText"></slot>
-                    {{ !toggleCollapse | oneOrThreeDots }}
-
-                    <ign-custom-h5 v-b-toggle.step2 @click.native="toggleCollapse = !toggleCollapse"
-                                   v-show="toggleCollapse" class="readMore">Lees meer
-                    </ign-custom-h5>
-
-                    <b-collapse class="mt-3" id="step2">
-                        <div>
-                            <slot name="uncollapsedText"></slot>
-                        </div>
-                        <slot name="button"></slot>
-
-                        <ign-custom-h5 @click.native="toggleCollapse = !toggleCollapse" class="readMore"
-                                       v-b-toggle.step2>Lees minder
-                        </ign-custom-h5>
-                    </b-collapse>
-                </ign-custom-h5>
-            </div>
-        </div>
+            </b-list-group-item>
+        </b-list-group>
     </div>
-
-
 </template>
 
 <script>
+    import apiMixin from '../mixins/apiMixin';
+
     export default {
-        name: 'AccordeonTest',
+        name: 'Overview',
+        mixins: [
+            apiMixin,
+        ],
         data() {
             return {
-                toggleCollapse: true,
+                contracts: []
+            }
+        },
+        methods: {
+            getListOfContracts() {
+                this.https.get("ious").then(result => {
+                    let list = [];
+                    let list2 = [];
+                    let _this = this;
 
-            };
+                    result.data.map(function (value) {
+                        list.push(value.state.data);
+                    });
+
+                    list.map(function (contract) {
+                        list2.push({
+                            value: contract.value,
+                            borrower: _this.$_apiMixin_convertName(contract.borrower),
+                            lender: _this.$_apiMixin_convertName(contract.lender)
+                        });
+                    });
+                    this.contracts = list2;
+                }, error => {
+                    console.error(error);
+                });
+            }
         },
-        props: ['logoSrc'],
-        filters: {
-            oneOrThreeDots(value) {
-                return value === true ? '...' : '.';
-            },
-        },
-    };
+        mounted() {
+            this.getListOfContracts();
+        }
+
+    }
 </script>
 
 <style scoped>
