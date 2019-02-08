@@ -3,9 +3,9 @@
         <div style="height: 10vh; background-color: white;" class="row justify-content-start pl-5 pt-3">
 
                 <img :src="img()" class="d-inline-block align-top nav-img" alt="BV" >
+
         </div>
         <div class="container">
-
 
         <b-navbar toggleable="md" type="dark" style="height: 5vh;" >
             <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
@@ -15,8 +15,8 @@
             <b-collapse is-nav id="nav_collapse">
 
                 <b-navbar-nav>
-                    <router-link tag="a" class="nav-link active" to="/">Contract Overview</router-link>
-                    <router-link tag="a" class="nav-link active" to="/create">New Contract</router-link>
+                    <router-link tag="a" class="nav-link active" to="/"><i class="fas fa-scroll mr-1"></i>Contract Overview</router-link>
+                    <router-link tag="a" class="nav-link active" to="/create"><i class="fas fa-plus-circle mr-1"></i>New Contract</router-link>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
