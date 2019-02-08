@@ -14,26 +14,25 @@
 
                 <b-list-group-item class="flex-column align-items-start" v-for="contract in contracts.slice().reverse()">
 
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5>{{contract.contractname}}</h5>
-                    </div>
 
-                    <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-1"><strong>Issuer:</strong> {{contract.lender}}</h6>
-                    </div>
-
-                    <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-1"><strong>Counterparty:</strong> {{contract.borrower}}</h6>
-                    </div>
-
-                    <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-1"><strong>Type of contract:</strong> {{contract.type}}</h6>
-                    </div>
-
-                    <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-1"><strong>Summary:</strong> {{contract.percentage}}% interest for
-                            €{{contract.duration}} for {{contract.value}} months.</h6>
-                    </div>
+                    <b-container class="bv-example-row text-left">
+                        <b-row>
+                            <b-col><h5>{{contract.contractname}}</h5></b-col>
+                            <div class="w-100"></div>
+                            <b-col sm="4"><strong>Issuer:</strong></b-col>
+                            <b-col>{{contract.lender}}</b-col>
+                            <div class="w-100"></div>
+                            <b-col sm="4"><strong>Counterparty:</strong></b-col>
+                            <b-col>{{contract.borrower}}</b-col>
+                            <div class="w-100"></div>
+                            <b-col sm="4"><strong>Type of contract:</strong></b-col>
+                            <b-col>{{contract.type}}</b-col>
+                            <div class="w-100"></div>
+                            <b-col sm="4"><strong>Summary:</strong></b-col>
+                            <b-col>{{contract.percentage}}% interest for
+                                €{{contract.duration}} for {{contract.value}} months.</b-col>
+                        </b-row>
+                    </b-container>
 
                 </b-list-group-item>
             </b-list-group>
