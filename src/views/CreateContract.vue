@@ -1,17 +1,15 @@
 <template>
     <div class="hello">
-        <br />
-        <!--<input type="text" v-model="input.counterparty" placeholder="Counter party" />-->
+        <br/>
 
-        <b-dropdown id="ddown1" text="Choose your counterparty" class="m-md-2">
-            <b-dropdown-divider></b-dropdown-divider>
-        </b-dropdown>
+        <b-form-select id="ddown1" v-model="selected" :options="peers" text="Choose your counterparty" class="m-md-2">
+        </b-form-select>
 
 
-        <input type="text" v-model="input.amount" placeholder="Amount" />
+        <input type="text" v-model="input.amount" placeholder="Amount"/>
         <button v-on:click="sendData()">Send</button>
-        <br />
-        <br />
+        <br/>
+        <br/>
         <textarea>{{ response }}</textarea>
         <h6>My profile: {{ myprofile }}</h6>
     </div>
@@ -19,11 +17,14 @@
 
 <script>
     import axios from "axios";
+
     export default {
         name: 'CreateContract',
-        data () {
+        data() {
             return {
                 myprofile: "",
+                selected: null,
+                peers: [],
                 input: {
                     counterparty: "",
                     amount: ""
@@ -32,8 +33,8 @@
             }
         },
         mounted() {
-            this.domain = '"http://172.20.10.13:10009/api/example/';
-
+            this.domain = 'http://172.20.10.13:10009/api/example/';
+            this.peers = [];
             //Get profile name
             this.$http.get(this.domain + "me").then(result => {
                 this.myprofile = result.data.me;
@@ -51,7 +52,7 @@
         },
         methods: {
             sendData() {
-                this.$http.post("https://httpbin.org/post", this.input, { headers: { "content-type": "application/json" } }).then(result => {
+                this.$http.post("https://httpbin.org/post", this.input, {headers: {"content-type": "application/json"}}).then(result => {
                     this.response = result.data.json.counterparty + result.data.json.amount;
                 }, error => {
                     console.error(error);
