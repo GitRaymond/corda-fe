@@ -1,16 +1,16 @@
 <template>
-    <h1>OVERVIEW</h1>
-    <h2>sub</h2>
-    
-    <!--<div class="hello">-->
-        <!--<h1>Your IP is {{ ip }}</h1>-->
-        <!--<input type="text" v-model="input.firstname" placeholder="First Name" />-->
-        <!--<input type="text" v-model="input.lastname" placeholder="Last Name" />-->
-        <!--<button v-on:click="sendData()">Send</button>-->
-        <!--<br />-->
-        <!--<br />-->
-        <!--<textarea>{{ response }}</textarea>-->
-    <!--</div>-->
+    <div class="hello">
+        <h1>Your IP is {{ ip }}</h1>
+        <input type="text" v-model="input.firstname" placeholder="First Name" />
+        <input type="text" v-model="input.lastname" placeholder="Last Name" />
+        <button v-on:click="sendData()">Send</button>
+        <br />
+        <br />
+        <textarea>{{ response }}</textarea>
+    </div>
+
+
+
 
 </template>
 
@@ -38,7 +38,7 @@
         methods: {
             sendData() {
                 this.$http.post("https://httpbin.org/post", this.input, { headers: { "content-type": "application/json" } }).then(result => {
-                    this.response = result.data;
+                    this.response = result.data.json.firstname + result.data.json.lastname;
                 }, error => {
                     console.error(error);
                 });
