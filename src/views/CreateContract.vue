@@ -1,7 +1,13 @@
 <template>
     <div class="hello">
         <br />
-        <input type="text" v-model="input.counterparty" placeholder="Counter party" />
+        <!--<input type="text" v-model="input.counterparty" placeholder="Counter party" />-->
+
+        <b-dropdown id="ddown1" text="Choose your counterparty" class="m-md-2">
+            <b-dropdown-divider></b-dropdown-divider>
+        </b-dropdown>
+
+
         <input type="text" v-model="input.amount" placeholder="Amount" />
         <button v-on:click="sendData()">Send</button>
         <br />
@@ -26,8 +32,18 @@
             }
         },
         mounted() {
-            this.$http.get("http://172.20.10.13:10009/api/example/me").then(result => {
+            this.domain = '"http://172.20.10.13:10009/api/example/';
+
+            //Get profile name
+            this.$http.get(this.domain + "me").then(result => {
                 this.myprofile = result.data.me;
+            }, error => {
+                console.error(error);
+            });
+
+            //Get counterparties
+            this.$http.get(this.domain + "peers").then(result => {
+                this.peers = result.data.peers;
 
             }, error => {
                 console.error(error);
