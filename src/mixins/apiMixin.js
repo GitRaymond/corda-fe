@@ -26,11 +26,14 @@ export default {
             return newVal;
         },
         $_apiMixin_getMyProfile() {
+            console.log('getMyProfile');
             this.https.get("me").then(result => {
                 this.myprofile = this.$_apiMixin_convertName(result.data.me);
+                console.log(this.$_apiMixin_convertName(result.data.me))
             }, error => {
                 console.error(error);
             });
         },
     },
+
 }

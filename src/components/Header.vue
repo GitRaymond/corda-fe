@@ -1,49 +1,68 @@
 <template>
-    <b-navbar toggleable="md" type="dark" variant="primary">
-        <router-link to="/create">Go to Foo</router-link>
-        <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+    <div>
+        <div style="height: 10vh; background-color: white;" class="row justify-content-start pl-5 pt-3">
 
-        <b-navbar-brand href="#">{{ myprofile}}</b-navbar-brand>
+                <img :src="img()" class="d-inline-block align-top nav-img" alt="BV" >
+                {{ profile }}
+        </div>
+        <b-navbar toggleable="md" type="dark" style="height: 5vh;" >
+            <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-        <b-collapse is-nav id="nav_collapse">
 
-            <b-navbar-nav>
-                <router-link tag="a" class="nav-link" to="/">Contract Overview</router-link>
-                <router-link tag="a" class="nav-link" to="/create">New Contract</router-link>
-            </b-navbar-nav>
 
-            <!-- Right aligned nav items -->
-            <b-navbar-nav class="ml-auto">
+            <b-collapse is-nav id="nav_collapse">
 
-                <b-nav-item-dropdown right>
-                    <!-- Using button-content slot -->
-                    <template slot="button-content">
-                        <em>Deepak Sigilipalli</em>
-                    </template>
-                    <b-dropdown-item href="#">Profile</b-dropdown-item>
-                    <b-dropdown-item href="#">Signout</b-dropdown-item>
-                </b-nav-item-dropdown>
-            </b-navbar-nav>
+                <b-navbar-nav>
+                    <router-link tag="a" class="nav-link active" to="/">Contract Overview</router-link>
+                    <router-link tag="a" class="nav-link active" to="/create">New Contract</router-link>
+                </b-navbar-nav>
 
-        </b-collapse>
-    </b-navbar>
+                <!-- Right aligned nav items -->
+                <b-navbar-nav class="ml-auto">
+
+                    <b-nav-item-dropdown right>
+                        <!-- Using button-content slot -->
+                        <template slot="button-content" >
+                            <em>Deepak Sigilipalli</em>
+                        </template>
+                        <b-dropdown-item href="#">Profile</b-dropdown-item>
+                        <b-dropdown-item href="#">Signout</b-dropdown-item>
+                    </b-nav-item-dropdown>
+                </b-navbar-nav>
+
+            </b-collapse>
+        </b-navbar>
+    </div>
 </template>
 
 <script>
-    import apiMixin from '../mixins/apiMixin'
 
     export default {
         name: "Header",
-        mixins: [
-            apiMixin,
-        ],
-        created() {
-            this.$_apiMixin_getMyProfile();
+        props: ['profile'],
+        computed: {
+
+        },
+        methods: {
+            img() {
+                if(this.profile === 'RABO BANK'){
+                    return require('../assets/rabobank.png')
+                } else if (this.profile === 'ABN AMRO BANK') {
+                    return require('../assets/abn-amro.png')
+                } else if (this.profile === 'ING BANK') {
+                    return require('../assets/ing.png')
+                }
+            }
         }
+
 
     }
 </script>
 
 <style scoped>
-
+    .nav-img {
+        height: 35px;
+        width: 35px;
+        object-fit: cover;
+    }
 </style>

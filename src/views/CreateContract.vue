@@ -1,5 +1,5 @@
 <template>
-    <div class="justify-content-center w-50">
+    <div class="mx-auto  w-50">
 
 
         <b-card title="New Contract" class="mt-5 c-card">

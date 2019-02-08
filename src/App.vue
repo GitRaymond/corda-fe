@@ -1,7 +1,7 @@
 <template>
-    <div id="app" >
-        <c-header style="height: 10vh"></c-header>
-        <div class="container " style="height: 90vh;" >
+    <div id="app" :style="'background-color: '+ getBodyBgColor() + ';'">
+        <c-header :style="'height: 15vh; background-color: ' + getHeaderBgColor() +';'" :profile="myprofile"></c-header>
+        <div class="container " style="height: 85vh;">
             <transition name="slide" mode="out-in">
                 <router-view/>
             </transition>
@@ -11,11 +11,39 @@
 
 <script>
     import Header from './components/Header';
+    import apiMixin from './mixins/apiMixin'
 
     export default {
         name: 'app',
         components: {
             cHeader: Header,
+        },
+        mixins: [
+            apiMixin,
+        ],
+
+        methods: {
+            getBodyBgColor() {
+                if (this.myprofile === 'RABO BANK') {
+                    return 'rgba(253, 100, 1, 0.02)';
+                } else if (this.myprofile === 'ABN AMRO BANK') {
+                    return 'rgb(0, 146, 134, 0.02)';
+                } else if (this.myprofile === 'ING BANK') {
+                    return 'rgb(255, 98, 1, 0.02)';
+                }
+            },
+            getHeaderBgColor() {
+                if (this.myprofile === 'RABO BANK') {
+                    return 'rgba(253, 100, 1)';
+                } else if (this.myprofile === 'ABN AMRO BANK') {
+                    return 'rgb(0, 146, 134)';
+                } else if (this.myprofile === 'ING BANK') {
+                    return 'rgb(255, 98, 1)';
+                }
+            }
+        },
+        created() {
+            this.$_apiMixin_getMyProfile();
         }
     }
 </script>
@@ -28,7 +56,6 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        background-image: url('assets/smart-contracts.jpg');
     }
 
     .slide-enter-active {
