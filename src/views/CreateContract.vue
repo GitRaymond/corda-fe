@@ -7,11 +7,19 @@
                 <b-form @submit.prevent="sendData">
                     <b-form-group id="counterParty"
                                   label="Counterparty:"
-                                  label-for="firstName"
-                    >
-                        <b-form-select id="counterParty" v-model="selected" :options="peers"  class="m-md-2">
-                            <option :value="null">Please select your counterparty</option>
+                                  label-for="firstName">
+
+
+
+                        <b-form-select id="counterParty"  v-model="selected" :options="peers" class="mb-3">
+                            <template slot="first">
+                                <!-- this slot appears above the options from 'options' prop -->
+                                <option :value="null" disabled>-- Please select an option --</option>
+                            </template>
+
                         </b-form-select>
+
+
 
                     </b-form-group>
                     <b-form-group id="amount"
@@ -71,7 +79,13 @@
 
             //Get counterparties
             this.$http.get(this.domain + "peers").then(result => {
-                this.peers = result.data.peers;
+
+                let list=[];
+                result.data.peers.map(function(value, key) {
+                    list.push({option: value, text: value});
+                });
+
+                this.peers = list;
 
             }, error => {
                 console.error(error);
