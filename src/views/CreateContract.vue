@@ -1,12 +1,13 @@
 <template>
     <div class="hello">
-        <h1>Sample get data {{ ip }}</h1>
-        <input type="text" v-model="input.firstname" placeholder="First Name" />
-        <input type="text" v-model="input.lastname" placeholder="Last Name" />
+        <br />
+        <input type="text" v-model="input.counterparty" placeholder="Counter party" />
+        <input type="text" v-model="input.amount" placeholder="Amount" />
         <button v-on:click="sendData()">Send</button>
         <br />
         <br />
         <textarea>{{ response }}</textarea>
+        <h6>My profile: {{ myprofile }}</h6>
     </div>
 </template>
 
@@ -16,17 +17,18 @@
         name: 'CreateContract',
         data () {
             return {
-                ip: "",
+                myprofile: "",
                 input: {
-                    firstname: "",
-                    lastname: ""
+                    counterparty: "",
+                    amount: ""
                 },
                 response: ""
             }
         },
         mounted() {
-            this.$http.get("https://httpbin.org/ip").then(result => {
-                this.ip = result.body.origin;
+            this.$http.get("http://172.20.10.13:10009/api/example/me").then(result => {
+                this.myprofile = result.data.me;
+
             }, error => {
                 console.error(error);
             });
@@ -34,7 +36,7 @@
         methods: {
             sendData() {
                 this.$http.post("https://httpbin.org/post", this.input, { headers: { "content-type": "application/json" } }).then(result => {
-                    this.response = result.data.json.firstname + result.data.json.lastname;
+                    this.response = result.data.json.counterparty + result.data.json.amount;
                 }, error => {
                     console.error(error);
                 });
