@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import CreateContract from './views/CreateContract';
 import Overview from './views/Overview';
+import CreateContract from './views/CreateContract';
 
 Vue.use(Router);
 
