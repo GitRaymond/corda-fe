@@ -1,19 +1,45 @@
 <template>
-    <div class="hello">
-        <br/>
-
-        <b-form-select id="ddown1" v-model="selected" :options="peers" text="Choose your counterparty" class="m-md-2">
-        </b-form-select>
+    <div class="justify-content-center">
 
 
-        <input type="text" v-model="input.amount" placeholder="Amount"/>
-        <button v-on:click="sendData()">Send</button>
-        <br/>
-        <br/>
-        <textarea>{{ response }}</textarea>
+        <b-card title="New Contract" class="mt-5">
+            <div class="">
+                <b-form @submit.prevent="sendData">
+                    <b-form-group id="counterParty"
+                                  label="Counterparty:"
+                                  label-for="firstName"
+                                  >
+                        <b-form-select id="counterParty" v-model="selected" :options="peers" text="Choose your counterparty" class="m-md-2">
+                        </b-form-select>
+                        
+                    </b-form-group>
+                    <b-form-group id="amount"
+                                  label="Amount"
+                                  label-for="amount">
+                        <b-form-input id="amount"
+                                      type="number"
+                                      v-model="input.amount"
+                                      required
+                                      placeholder="Enter amount">
+                        </b-form-input>
+                    </b-form-group>
+
+                    <b-button type="submit" variant="primary">Send</b-button>
+                    <!--<b-button type="reset" variant="danger">Reset</b-button>-->
+                </b-form>
+
+
+
+            </div>
+        </b-card>
+        <div class="mt-5">
+      <textarea>{{ response }}</textarea>
+
         <h6>My profile: {{ myprofile }}</h6>
+        </div>
     </div>
 </template>
+
 
 <script>
     import axios from "axios";
