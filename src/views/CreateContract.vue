@@ -8,10 +8,11 @@
                     <b-form-group id="counterParty"
                                   label="Counterparty:"
                                   label-for="firstName"
-                                  >
-                        <b-form-select id="counterParty" v-model="selected" :options="peers" text="Choose your counterparty" class="m-md-2">
+                    >
+                        <b-form-select id="counterParty" v-model="selected" :options="peers"  class="m-md-2">
+                            <option :value="null">Please select your counterparty</option>
                         </b-form-select>
-                        
+
                     </b-form-group>
                     <b-form-group id="amount"
                                   label="Amount"
@@ -19,6 +20,7 @@
                         <b-form-input id="amount"
                                       type="number"
                                       v-model="input.amount"
+                                      max="100"
                                       required
                                       placeholder="Enter amount">
                         </b-form-input>
@@ -29,13 +31,12 @@
                 </b-form>
 
 
-
             </div>
         </b-card>
         <div class="mt-5">
-      <textarea>{{ response }}</textarea>
+            <textarea>{{ response }}</textarea>
 
-        <h6>My profile: {{ myprofile }}</h6>
+            <h6>My profile: {{ myprofile }}</h6>
         </div>
     </div>
 </template>

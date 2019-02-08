@@ -1,7 +1,10 @@
 <template>
     <div id="app">
         <c-header></c-header>
-        <router-view></router-view>
+        <div class="container">
+            <router-view></router-view>
+        </div>
+
     </div>
 </template>
 
