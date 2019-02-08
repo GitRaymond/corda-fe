@@ -1,80 +1,114 @@
 <template>
-    <div class="mx-auto  w-50">
+    <div class="row">
+        <div class="col-6">
+            <b-card title="New Contract" class="mt-5 c-card">
+                <div class="">
+                    <b-alert :show="dismissCountDown"
+                             dismissible
+                             variant="success"
+                             @dismissed="dismissCountDown=0"
+                             @dismiss-count-down="countDownChanged">
+                        <h4 class="alert-heading">Well done!</h4>
+                        <p>
+                            Ohh yeah, you successfully placed the contract
+                        </p>
+                        <hr>
+                        <p class="mb-0">
+                            See you back soon
+                        </p>
+                    </b-alert>
+                    <b-form @submit.prevent="sendData">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Counterparty</label>
+                            <div class="col-sm-9">
+                                <b-form-select id="counterParty" v-model="selected" :options="peers" @input="getSelectedItem()">
+                                    <template slot="first">
+                                        <option :value="null" disabled>Select a counterparty</option>
+                                    </template>
+                                </b-form-select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="amount" class="col-sm-3 col-form-label text-left">Amount</label>
+                            <div class="col-sm-9">
+                                <input type="number"
+                                       v-model="input.amount"
+                                       max="100"
+                                       required
+                                       class="form-control"
+                                       id="amount"
+                                       placeholder="Enter amount">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="percentage" class="col-sm-3 col-form-label text-left">Percentage</label>
+                            <div class="col-sm-9">
+                                <input type="number"
+                                       v-model="input.percentage"
+                                       max="100"
+                                       required
+                                       class="form-control"
+                                       id="percentage"
+                                       placeholder="Reinsurance (in percentage)">
+                            </div>
+                        </div>
 
 
-        <b-card title="New Contract" class="mt-5 c-card">
-            <div class="">
-                <b-alert :show="dismissCountDown"
-                         dismissible
-                         variant="success"
-                         @dismissed="dismissCountDown=0"
-                         @dismiss-count-down="countDownChanged">
-                    <h4 class="alert-heading">Well done!</h4>
-                    <p>
-                        Ohh yeah, you successfully placed the contract
-                    </p>
-                    <hr>
-                    <p class="mb-0">
-                        See you back soon
-                    </p>
-                </b-alert>
-                <b-form @submit.prevent="sendData">
-
-                    <b-form-select id="counterParty" v-model="selected" :options="peers" @input="getSelectedItem()" class="mb-3">
-                        <template slot="first">
-                            <option :value="null" disabled>-- Please select a counterparty --</option>
-                        </template>
-                    </b-form-select>
-                    <b-form-input placeholder="Smart contract name" id="nameofcontract" label="" type="text" label-for="name" class="c-input" v-model="input.name"></b-form-input>
-                    <br/>
-                    <b-form-input placeholder="Type" id="typeofcontract" label="" type="text" label-for="type" class="c-input" v-model="input.type">
-                    </b-form-input><br/>
-                    <b-form-group prepend="€" id="amount"
-                                  label=""
-                                  label-for="amount"
-                                  class="c-input">
-                        <b-form-input id="amount"
-                                      type="number"
-                                      v-model="input.duration"
-                                      required
-                                      class="c-input"
-                                      placeholder="Amount">
-                        </b-form-input>
-                    </b-form-group>
-                    <b-form-group id="percentage"
-                                  label=""
-                                  label-for="percentage"
-                                  class="c-input">
-                        <b-form-input id="percentage"
-                                      type="number"
-                                      v-model="input.percentage"
-                                      max="100"
-                                      required
-                                      class="c-input"
-                                      placeholder="Interests (in percentage)">
-                        </b-form-input>
-                    </b-form-group>
-                    <b-form-group id="duration"
-                                  label=""
-                                  label-for="duration"
-                                  class="c-input">
-                        <b-form-input id="duration"
-                                      type="number"
-                                      v-model="input.amount"
-                                      required
-                                      max="100"
-                                      class="c-input"
-                                      placeholder="Duration (in months)">
-                        </b-form-input>
-                    </b-form-group>
+                        <div class="form-group row">
+                            <label for="duration" class="col-sm-3 col-form-label text-left">Duration</label>
+                            <div class="col-sm-9">
+                                <input type="number"
+                                       v-model="input.duration"
+                                       class="form-control"
+                                       required
+                                       id="duration"
+                                       placeholder="Duration (in months)">
+                            </div>
+                        </div>
 
 
-                    <b-button type="submit" variant="primary" :disabled="!isValid">Send</b-button>
+                        <div class="form-group row">
+                            <label for="typeofcontract" class="col-sm-3 col-form-label text-left">Type</label>
+                            <div class="col-sm-9">
+                                <input type="text"
+                                       v-model="input.type"
+                                       class="form-control"
+                                       required
+                                       id="typeofcontract"
+                                       placeholder="Type">
+                            </div>
+                        </div>
 
-                </b-form>
-            </div>
-        </b-card>
+                        <div class="form-group row">
+                            <label for="nameofcontract" class="col-sm-3 col-form-label text-left">Product</label>
+                            <div class="col-sm-9">
+                                <input type="text"
+                                       v-model="input.name"
+                                       class="form-control"
+                                       required
+                                       id="nameofcontract"
+                                       placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-end mr-1">
+                        <button class="btn btn-success" type="submit" :disabled="!isValid">Create Contract</button>
+                        </div>
+
+
+                    </b-form>
+
+                </div>
+            </b-card>
+        </div>
+        <div class="col-6">
+            <img src="../assets/agreement.png" height="400" width="400" class="mt-5 ml-5"/>
+        </div>
+
     </div>
+
 </template>
 
 
@@ -106,18 +140,18 @@
         computed: {
             isValid() {
                 return this.input.amount &&
-                        this.input.name &&
-                        this.input.type &&
-                        this.input.percentage &&
-                        this.input.duration &&
-                        this.selected;
+                    this.input.name &&
+                    this.input.type &&
+                    this.input.percentage &&
+                    this.input.duration &&
+                    this.selected;
             }
         },
         methods: {
-            countDownChanged (dismissCountDown) {
+            countDownChanged(dismissCountDown) {
                 this.dismissCountDown = dismissCountDown;
             },
-            showAlert () {
+            showAlert() {
                 this.dismissCountDown = this.dismissSecs
             },
 
@@ -131,25 +165,25 @@
                     type: this.input.type
                 };
 
-                const url = "create-iou?partyName="+this.selected+"&iouValue="+
-                                this.input.amount+'&name='+
-                                this.input.name+'&type='+
-                                this.input.type+'&percentage='+
-                                this.input.percentage+'&duration='+this.input.duration
+                const url = "create-iou?partyName=" + this.selected + "&iouValue=" +
+                    this.input.amount + '&name=' +
+                    this.input.name + '&type=' +
+                    this.input.type + '&percentage=' +
+                    this.input.percentage + '&duration=' + this.input.duration
 
                 this.https.put(url, postData, {headers: {"content-type": "application/json"}})
                     .then(() => {
                         this.showAlert();
                     })
                     .catch((error) => {
-                    console.error(error);
-                });
+                        console.error(error);
+                    });
             },
             getAllParties() {
                 this.https.get("peers").then(result => {
                     let list = [];
                     var _this = this;
-                     result.data.peers.map(function (value) {
+                    result.data.peers.map(function (value) {
                         list.push({value: value, text: _this.$_apiMixin_convertName(value)});
                     });
                     this.peers = list;
@@ -157,7 +191,7 @@
                     console.error(error);
                 });
             },
-            getSelectedItem: function() {
+            getSelectedItem: function () {
                 console.log(this.selected);
             }
 
