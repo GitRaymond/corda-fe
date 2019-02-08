@@ -25,6 +25,10 @@
                             <option :value="null" disabled>-- Please select a counterparty --</option>
                         </template>
                     </b-form-select>
+                    <b-form-input placeholder="Smart contract name" id="nameofcontract" label="" type="text" label-for="name" class="c-input" v-model="input.name"></b-form-input>
+                    <br/>
+                    <b-form-input placeholder="Type" id="typeofcontract" label="" type="text" label-for="type" class="c-input" v-model="input.type">
+                    </b-form-input><br/>
                     <b-form-group prepend="€" id="amount"
                                   label=""
                                   label-for="amount"
@@ -35,7 +39,7 @@
                                       max="100"
                                       required
                                       class="c-input"
-                                      placeholder="Enter amount">
+                                      placeholder="Amount">
                         </b-form-input>
                     </b-form-group>
                     <b-form-group id="percentage"
@@ -48,7 +52,7 @@
                                       max="100"
                                       required
                                       class="c-input"
-                                      placeholder="Reinsurance (in percentage)">
+                                      placeholder="Interests (in percentage)">
                         </b-form-input>
                     </b-form-group>
                     <b-form-group id="duration"
@@ -63,10 +67,7 @@
                                       placeholder="Duration (in months)">
                         </b-form-input>
                     </b-form-group>
-                    <b-form-input placeholder="Type" id="typeofcontract" label="" type="text" label-for="type" class="c-input" v-model="input.type">
-                    </b-form-input><br/>
-                    <b-form-input placeholder="Product name" id="nameofcontract" label="" type="text" label-for="name" class="c-input" v-model="input.name">
-                    </b-form-input>
+
 
                     <b-button type="submit" variant="primary" :disabled="!isValid">Send</b-button>
 
