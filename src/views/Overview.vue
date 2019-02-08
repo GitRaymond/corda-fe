@@ -27,10 +27,6 @@
                     <h6 class="mb-1">Smart contract of {{contract.type}} for {{contract.percentage}}% with {{contract.duration}} months</h6>
                 </div>
 
-
-
-
-
             </b-list-group-item>
         </b-list-group>
     </div>

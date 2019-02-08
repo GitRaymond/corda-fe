@@ -3,8 +3,10 @@
         <div style="height: 10vh; background-color: white;" class="row justify-content-start pl-5 pt-3">
 
                 <img :src="img()" class="d-inline-block align-top nav-img" alt="BV" >
-                {{ profile }}
         </div>
+        <div class="container">
+
+
         <b-navbar toggleable="md" type="dark" style="height: 5vh;" >
             <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
@@ -32,6 +34,7 @@
 
             </b-collapse>
         </b-navbar>
+        </div>
     </div>
 </template>
 
@@ -61,8 +64,7 @@
 
 <style scoped>
     .nav-img {
-        height: 35px;
-        width: 35px;
+        height: 50px;
         object-fit: cover;
     }
 </style>
