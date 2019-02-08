@@ -1,5 +1,5 @@
 <template>
-    <div class="justify-content-center">
+    <div class="justify-content-center w-50">
 
 
         <b-card title="New Contract" class="mt-5 c-card">
@@ -10,7 +10,7 @@
                     <b-form-select id="counterParty" v-model="selected" :options="peers" @input="getSelectedItem()" class="mb-3">
                         <template slot="first">
                             <!-- this slot appears above the options from 'options' prop -->
-                            <option :value="null" disabled>-- Please select an option --</option>
+                            <option :value="null" disabled>-- Please select a counterparty --</option>
                         </template>
 
                     </b-form-select>
@@ -50,17 +50,19 @@
                 </b-form>
             </div>
         </b-card>
-        <div class="mt-5">
-            <textarea>{{ response }}</textarea>
-            <h6>My profile: {{ myprofile }}</h6>
-        </div>
+
     </div>
 </template>
 
 
 <script>
+    import apiMixin from '../mixins/apiMixin';
+
     export default {
         name: 'CreateContract',
+        mixins: [
+            apiMixin,
+        ],
         data() {
             return {
                 dismissSecs: 5,
@@ -71,38 +73,25 @@
                 input: {
                     amount: ""
                 },
-                response: ""
+                response: "",
+                domain: 'http://172.20.10.13:10009/api/example/',
+                peers: [],
             }
         },
         methods: {
             countDownChanged (dismissCountDown) {
-                this.dismissCountDown = dismissCountDown
+                this.dismissCountDown = dismissCountDown;
             },
             showAlert () {
                 this.dismissCountDown = this.dismissSecs
             },
-            convertName(value) {
-                let newVal = '';
-                if (value.includes('Notary')) {
-                    newVal = 'Notary, Amsterdam';
-                } else if (value.includes('PartyC')) {
-                    newVal = 'ABN AMRO BANK';
-                } else if (value.includes('PartyB')) {
-                    newVal = 'ING BANK';
-                }  else if (value.includes('PartyA')) {
-                    newVal = 'RABO BANK';
-                } else {
-                    newVal = value;
-                }
-                return newVal;
-            },
+
             sendData() {
                 const postData = {
                     partyName: this.selected,
                     iouValue: this.input.amount
                 };
-
-                this.$http.put(this.domain + "create-iou?partyName="+this.selected+"&iouValue="+this.input.amount, postData, {headers: {"content-type": "application/json"}})
+                this.https.put("create-iou?partyName="+this.selected+"&iouValue="+this.input.amount, postData, {headers: {"content-type": "application/json"}})
                     .then((result) => {
                         this.showAlert();
                     })
@@ -110,19 +99,12 @@
                     console.error(error);
                 });
             },
-            getMyProfile() {
-                this.$http.get(this.domain + "me").then(result => {
-                    this.myprofile = this.convertName(result.data.me);
-                }, error => {
-                    console.error(error);
-                });
-            },
             getAllParties() {
-                this.$http.get(this.domain + "peers").then(result => {
+                this.https.get("peers").then(result => {
                     let list = [];
                     var _this = this;
                      result.data.peers.map(function (value) {
-                        list.push({value: value, text: _this.convertName(value)});
+                        list.push({value: value, text: _this.$_apiMixin_convertName(value)});
                     });
                     this.peers = list;
                 }, error => {
@@ -135,11 +117,9 @@
 
         },
         mounted() {
-            this.domain = 'http://172.20.10.13:10009/api/example/';
-            this.peers = [];
-            this.getMyProfile();
+            this.$_apiMixin_getMyProfile();
             this.getAllParties();
-        }
+        },
 
     }
 </script>

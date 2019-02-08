@@ -3,7 +3,7 @@
         <router-link to="/create">Go to Foo</router-link>
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-        <b-navbar-brand href="#">ABN AMRO</b-navbar-brand>
+        <b-navbar-brand href="#">{{ myprofile}}</b-navbar-brand>
 
         <b-collapse is-nav id="nav_collapse">
 
@@ -30,8 +30,17 @@
 </template>
 
 <script>
+    import apiMixin from '../mixins/apiMixin'
+
     export default {
-        name: "Header"
+        name: "Header",
+        mixins: [
+            apiMixin,
+        ],
+        created() {
+            this.$_apiMixin_getMyProfile();
+        }
+
     }
 </script>
 
