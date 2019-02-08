@@ -39,7 +39,6 @@
         </b-card>
         <div class="mt-5">
             <textarea>{{ response }}</textarea>
-
             <h6>My profile: {{ myprofile }}</h6>
         </div>
     </div>
@@ -47,8 +46,6 @@
 
 
 <script>
-    import axios from "axios";
-
     export default {
         name: 'CreateContract',
         data() {
@@ -57,7 +54,6 @@
                 selected: null,
                 peers: [],
                 input: {
-                    counterparty: "",
                     amount: ""
                 },
                 response: ""
@@ -80,9 +76,17 @@
                 return newVal;
             },
             sendData() {
-                this.$http.post("https://httpbin.org/post", this.input, {headers: {"content-type": "application/json"}})
+                const postData = {
+                    partyName: this.selected,
+                    iouValue: this.input.amount
+                };
+
+                // http://172.20.10.13:10009/api/example/
+                // create-iou?partyName=O=Notary%20Service,%20L=Zurich,%20C=CH&iouValue=92
+
+                this.$http.put(this.domain + "create-iou?partyName="+this.selected+"&iouValue="+this.input.amount, postData, {headers: {"content-type": "application/json"}})
                     .then((result) => {
-                        this.response = result.data.json.counterparty + result.data.json.amount;
+                        console.log( 'save succeedd');
                     })
                     .catch((error) => {
                     console.error(error);
@@ -110,6 +114,7 @@
             getSelectedItem: function() {
                 console.log(this.selected);
             }
+
         },
         mounted() {
             this.domain = 'http://172.20.10.13:10009/api/example/';
