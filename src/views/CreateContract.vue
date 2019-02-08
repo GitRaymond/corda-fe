@@ -35,8 +35,7 @@
                                   class="c-input">
                         <b-form-input id="amount"
                                       type="number"
-                                      v-model="input.amount"
-                                      max="100"
+                                      v-model="input.duration"
                                       required
                                       class="c-input"
                                       placeholder="Amount">
@@ -61,8 +60,9 @@
                                   class="c-input">
                         <b-form-input id="duration"
                                       type="number"
-                                      v-model="input.duration"
+                                      v-model="input.amount"
                                       required
+                                      max="100"
                                       class="c-input"
                                       placeholder="Duration (in months)">
                         </b-form-input>

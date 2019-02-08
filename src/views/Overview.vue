@@ -19,17 +19,20 @@
                     </div>
 
                     <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-1"><strong>Lender:</strong> {{contract.lender}}</h6>
-                        <small class="text-muted">{{contract.value}}</small>
+                        <h6 class="mb-1"><strong>Issuer:</strong> {{contract.lender}}</h6>
                     </div>
 
                     <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-1"><strong>Borrower:</strong> {{contract.borrower}}</h6>
+                        <h6 class="mb-1"><strong>Counterparty:</strong> {{contract.borrower}}</h6>
                     </div>
 
                     <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-1">Smart contract of {{contract.type}} for {{contract.percentage}}% with
-                            {{contract.duration}} months</h6>
+                        <h6 class="mb-1"><strong>Type of contract:</strong> {{contract.type}}</h6>
+                    </div>
+
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-1"><strong>Summary:</strong> {{contract.percentage}}% interest for
+                            €{{contract.duration}} for {{contract.value}} months.</h6>
                     </div>
 
                 </b-list-group-item>
