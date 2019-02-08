@@ -2,13 +2,10 @@
     <div class="justify-content-center">
 
 
-        <b-card title="New Contract" class="mt-5">
+        <b-card title="New Contract" class="mt-5 c-card" >
             <div class="">
                 <b-form @submit.prevent="sendData">
-                    <b-form-group id="counterParty"
-                                  label="Counterparty:"
-                                  label-for="firstName">
-
+                
 
 
                         <b-form-select id="counterParty"  v-model="selected" :options="peers" class="mb-3">
@@ -19,17 +16,17 @@
 
                         </b-form-select>
 
-
-
                     </b-form-group>
                     <b-form-group id="amount"
                                   label="Amount"
-                                  label-for="amount">
+                                  label-for="amount"
+                    class="c-input">
                         <b-form-input id="amount"
                                       type="number"
                                       v-model="input.amount"
                                       max="100"
                                       required
+                                      class="c-input"
                                       placeholder="Enter amount">
                         </b-form-input>
                     </b-form-group>
@@ -141,5 +138,13 @@
     textarea {
         width: 600px;
         height: 200px;
+    }
+
+    .c-card {
+        opacity: 0.95;
+    }
+
+    .c-input {
+        opacity: 1;
     }
 </style>
