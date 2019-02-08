@@ -19,12 +19,12 @@
                     </p>
                 </b-alert>
                 <b-form @submit.prevent="sendData">
+
                     <b-form-select id="counterParty" v-model="selected" :options="peers" @input="getSelectedItem()" class="mb-3">
                         <template slot="first">
                             <option :value="null" disabled>-- Please select a counterparty --</option>
                         </template>
                     </b-form-select>
-
                     <b-form-group prepend="€" id="amount"
                                   label=""
                                   label-for="amount"
@@ -68,7 +68,7 @@
                     <b-form-input placeholder="Product name" id="nameofcontract" label="" type="text" label-for="name" class="c-input" v-model="input.name">
                     </b-form-input>
 
-                    <b-button type="submit" variant="primary">Send</b-button>
+                    <b-button type="submit" variant="primary" :disabled="!isValid">Send</b-button>
 
                 </b-form>
             </div>
@@ -100,6 +100,16 @@
                 },
                 response: "",
                 peers: [],
+            }
+        },
+        computed: {
+            isValid() {
+                return this.input.amount &&
+                        this.input.name &&
+                        this.input.type &&
+                        this.input.percentage &&
+                        this.input.duration &&
+                        this.selected;
             }
         },
         methods: {
