@@ -1,6 +1,6 @@
 <template>
     <div class="hello">
-        <h1>Your IP is {{ ip }}</h1>
+        <h1>Sample get data {{ ip }}</h1>
         <input type="text" v-model="input.firstname" placeholder="First Name" />
         <input type="text" v-model="input.lastname" placeholder="Last Name" />
         <button v-on:click="sendData()">Send</button>
