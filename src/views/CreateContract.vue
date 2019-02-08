@@ -66,13 +66,14 @@
         methods: {
             convertName(value) {
                 let newVal = '';
-                console.log(value)
-                if (value === 'O=Notary Service, L=Zurich, C=CH') {
+                if (value.includes('Notary')) {
                     newVal = 'Notary, Amsterdam';
-                } else if (value === 'O=PartyC, L=Paris, C=FR') {
+                } else if (value.includes('PartyC')) {
                     newVal = 'ABN AMRO BANK';
-                } else if (value === 'O=PartyB, L=New York, C=US') {
+                } else if (value.includes('PartyB')) {
                     newVal = 'ING BANK';
+                }  else if (value.includes('PartyA')) {
+                    newVal = 'RABO BANK';
                 } else {
                     newVal = value;
                 }
@@ -93,27 +94,24 @@
                 }, error => {
                     console.error(error);
                 });
+            },
+            getAllParties() {
+                this.$http.get(this.domain + "peers").then(result => {
+                    let list = [];
+                    result.data.peers.map(function (value) {
+                        list.push({option: value, text: this.convertName(value)});
+                    });
+                    this.peers = list;
+                }, error => {
+                    console.error(error);
+                });
             }
         },
         mounted() {
             this.domain = 'http://172.20.10.13:10009/api/example/';
             this.peers = [];
-            //Get profile name
             this.getMyProfile();
-
-            //Get counterparties
-            this.$http.get(this.domain + "peers").then(result => {
-
-                let list = [];
-                result.data.peers.map(function (value) {
-                    // list.push({option: value, text: this.convertName(value)});
-                });
-
-                this.peers = list;
-
-            }, error => {
-                console.error(error);
-            });
+            this.getAllParties();
         }
 
     }
