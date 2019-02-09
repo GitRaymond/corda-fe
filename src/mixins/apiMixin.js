@@ -4,7 +4,7 @@ export default {
     data() {
         return {
             https: axios.create({
-                baseURL: 'http://192.168.60.138:10015/api/example/',
+                baseURL: 'http://192.168.43.118:10012/api/example/',
             }),
             myprofile: null,
         }
